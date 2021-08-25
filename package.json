@@ -4,8 +4,8 @@
 	"version": "0.0.10",
 	"license": "MIT",
 	"bin": {
-		"tweespaces": "node-env-run index.js",
-		"tws": "node-env-run index.js"
+		"tweespaces": "nodenv index.js",
+		"tws": "nodenv index.js"
 	},
 	"author": {
 		"name": "Rich Haines",
