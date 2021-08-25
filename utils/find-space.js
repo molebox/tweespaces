@@ -1,9 +1,10 @@
+require('dotenv').config();
 const { dim, italic, bold, red } = require('chalk');
 const Spinner = require('cli-spinner').Spinner;
 const fetch = require('node-fetch')
 const merge = require('lodash.merge');
 const emoji = require('node-emoji')
-require('dotenv').config();
+
 
 
 const SPACES_URL = 'https://api.twitter.com/2/spaces/search?query=';

@@ -1,11 +1,11 @@
 {
 	"name": "tweespaces",
 	"description": "Lookup Twitter spaces by keyword",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"license": "MIT",
 	"bin": {
-		"tweespaces": "eval $(cat .env) index.js",
-		"tws": "eval $(cat .env) index.js"
+		"tweespaces": "node-env-run index.js",
+		"tws": "node-env-run index.js"
 	},
 	"author": {
 		"name": "Rich Haines",
@@ -44,6 +44,7 @@
 		"lodash.merge": "^4.6.2",
 		"meow": "^9.0.0",
 		"node-emoji": "^1.11.0",
+		"node-env-run": "^4.0.2",
 		"node-fetch": "^2.6.1"
 	},
 	"devDependencies": {
