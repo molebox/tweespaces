@@ -5,8 +5,6 @@ const fetch = require('node-fetch')
 const merge = require('lodash.merge');
 const emoji = require('node-emoji')
 
-
-
 const SPACES_URL = 'https://api.twitter.com/2/spaces/search?query=';
 
 module.exports = async ({
@@ -14,6 +12,9 @@ module.exports = async ({
   live,
   query
 }) => {
+
+  const bearer = await fetch('https://tweespaces-serverless-function.vercel.app/api/bearer');
+  const bearerResult = await bearer.json();
 
   const state = scheduled ? 'scheduled' : live ? 'live' : 'live'
 
@@ -26,7 +27,7 @@ module.exports = async ({
   const response = await fetch(url, { 
     method: 'GET', 
     headers: {
-      'Authorization': 'Bearer ' + process.env.BEARER, 
+      'Authorization': 'Bearer ' + bearerResult.bearer, 
       'Content-Type': 'application/json'
     },
   });
