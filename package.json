@@ -1,7 +1,7 @@
 {
 	"name": "tweespaces",
 	"description": "Lookup Twitter spaces by keyword",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"license": "MIT",
 	"bin": {
 		"tweespaces": "index.js",
@@ -12,6 +12,10 @@
 		"email": "hello@richardhaines.dev",
 		"url": "https://richardhaines.dev"
 	},
+	"repository": {
+    "type": "git",
+    "url": "https://github.com/molebox/tweespaces"
+  },
 	"keywords": [
 		"tweespaces",
 		"Rich Haines"
