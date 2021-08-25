@@ -7,7 +7,6 @@ require('dotenv').config();
 
 
 const SPACES_URL = 'https://api.twitter.com/2/spaces/search?query=';
-const BEARER = 'AAAAAAAAAAAAAAAAAAAAAFoATAEAAAAA05wlsi8xbMc%2FVmStXJd9%2BZw8JX4%3DBWtsD0e0X10t7HkzH34LqszKk3cf8gn4iFMSZwOV6E816cRN1K'
 
 module.exports = async ({
   scheduled,
@@ -26,7 +25,7 @@ module.exports = async ({
   const response = await fetch(url, { 
     method: 'GET', 
     headers: {
-      'Authorization': 'Bearer ' + BEARER, 
+      'Authorization': 'Bearer ' + process.env.BEARER, 
       'Content-Type': 'application/json'
     },
   });
