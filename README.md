@@ -32,6 +32,9 @@ There are 3 flags:
   npx tws --scheduled --query="developer"
 ```
 
+## Result
+
+!['A GIF of running a tweespace command. Shows the CLI output'](tweespaces.gif)
   
 ## Author
 
