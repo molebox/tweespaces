@@ -91,9 +91,9 @@ module.exports = async ({
     console.log();
     console.log(emoji.get('timer_clock'), '  ', bold(new Date(start).toLocaleTimeString('en-US')), dim(italic(' (All times PTZ)')))
     console.log();
-    console.log(emoji.get('question'), ' ', dim(description))
-    console.log();
     console.log(emoji.get('writing_hand'), '  ', bold(creator))
+    console.log();
+    console.log(emoji.get('question'), ' ', dim(description))
     console.log()
     console.log(emoji.get('baby_chick'), ' ', dim(bold(twitterHandleLink(creatorHandle))))
     console.log();
