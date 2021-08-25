@@ -1,7 +1,7 @@
 {
 	"name": "tweespaces",
 	"description": "Lookup Twitter spaces by keyword",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"license": "MIT",
 	"bin": {
 		"tweespaces": "index.js",
@@ -18,7 +18,11 @@
   },
 	"keywords": [
 		"tweespaces",
-		"Rich Haines"
+		"node",
+		"nodejs",
+		"node-cli",
+		"twitter-api",
+		"twitter-spaces"
 	],
 	"files": [
 		"index.js",
