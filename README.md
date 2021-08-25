@@ -18,7 +18,7 @@ There are 3 flags:
 
 - `--live` - all spaces that are live now and match the query.
 - `--scheduled` - all spaces that are scheduled to be run and match the query.
-- `--query=""` - the keyword(s) to query. This can be any text (including mentions and Hashtags).
+- `--query=""` - the keyword to query. This can be any text (including mentions and Hashtags).
 
 ### Show all live spaces with "developer" in the title
 

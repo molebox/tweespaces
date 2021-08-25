@@ -1,7 +1,7 @@
 {
 	"name": "tweespaces",
 	"description": "Lookup Twitter spaces by keyword",
-	"version": "0.0.4",
+	"version": "0.0.6",
 	"license": "MIT",
 	"bin": {
 		"tweespaces": "index.js",
