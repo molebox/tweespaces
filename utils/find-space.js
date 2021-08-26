@@ -4,6 +4,7 @@ const Spinner = require('cli-spinner').Spinner;
 const fetch = require('node-fetch')
 const merge = require('lodash.merge');
 const emoji = require('node-emoji')
+const CryptoJS = require("crypto-js");
 
 const SPACES_URL = 'https://api.twitter.com/2/spaces/search?query=';
 
@@ -24,10 +25,16 @@ module.exports = async ({
 
   spinner.start(dim('Searching for spaces.....'));
 
-  const response = await fetch(url, { 
-    method: 'GET', 
+  const decryptWithAES = (stringToDecrypt) => {
+    const bytes = CryptoJS.AES.decrypt(stringToDecrypt, 'Magpienemo@011210');
+    const originalText = bytes.toString(CryptoJS.enc.Utf8);
+    return originalText;
+  };
+
+  const response = await fetch(url, {
+    method: 'GET',
     headers: {
-      'Authorization': 'Bearer ' + bearerResult.bearer, 
+      'Authorization': 'Bearer ' + decryptWithAES(bearerResult.bearer),
       'Content-Type': 'application/json'
     },
   });
@@ -41,14 +48,14 @@ module.exports = async ({
     if (query !== undefined && scheduled) {
       return console.log(emoji.get('scream'), ' ', bold('No results found! Try a different query or search for live spaces...'))
     } else if (query !== undefined && live) {
-    return console.log(emoji.get('scream'), ' ', bold('No results found! Try a different query or search for scheduled spaces...'))
-    } else if(query === undefined) {
+      return console.log(emoji.get('scream'), ' ', bold('No results found! Try a different query or search for scheduled spaces...'))
+    } else if (query === undefined) {
       return console.log(emoji.get('scream'), ' ', bold('No results found! Try adding a query...'))
     }
     return console.log(emoji.get('scream'), ' ', bold('No results found!'))
   }
 
-  const spaceInfo = result.data.map(({      
+  const spaceInfo = result.data.map(({
     participant_count,
     scheduled_start,
     title,
@@ -62,7 +69,7 @@ module.exports = async ({
     };
   })
 
-  const creatorInfo = result.includes.users.map(({      
+  const creatorInfo = result.includes.users.map(({
     name,
     username,
     description,
@@ -81,7 +88,7 @@ module.exports = async ({
   function twitterHandleLink(handle) {
     return `https://twitter.com/${handle}`
   }
-  spaces.map(({title, creator, creatorHandle, start, description}) => {
+  spaces.map(({ title, creator, creatorHandle, start, description }) => {
 
     console.log(red(bold('-----------------------------------------------------------------------------')));
     console.log();
