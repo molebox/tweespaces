@@ -12,16 +12,24 @@ module.exports = async ({
 }) => {
 
   const state = scheduled ? 'scheduled' : live ? 'live' : 'live'
-  const response = await fetch(`https://tweespaces-serverless-function.vercel.app/api/spaces?state=${state}`);
+  const response = await fetch(`https://tweespaces-serverless-function.vercel.app/api/spaces`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: {
+      state,
+      query
+    }
+  });
   const result = await response.json();
-  console.log(result.spaces)
 
 
   const spinner = new Spinner(dim('Searching for spaces.....'));
 
   spinner.start();
 
-  const hasResult = result.spaces.meta.result_count !== 0 ? true : false;
+  const hasResult = result.meta.result_count !== 0 ? true : false;
 
   spinner.stop(true);
 
@@ -36,7 +44,7 @@ module.exports = async ({
     return console.log(emoji.get('scream'), ' ', bold('No results found!'))
   }
 
-  const spaceInfo = result.spaces.data.map(({
+  const spaceInfo = result.data.map(({
     participant_count,
     scheduled_start,
     title,
@@ -50,7 +58,7 @@ module.exports = async ({
     };
   })
 
-  const creatorInfo = result.spaces.includes.users.map(({
+  const creatorInfo = result.includes.users.map(({
     name,
     username,
     description,
