@@ -22,14 +22,14 @@ module.exports = async ({
       query
     }
   });
-  const result = await response.json();
+  const { spaces } = await response.json();
 
 
   const spinner = new Spinner(dim('Searching for spaces.....'));
 
   spinner.start();
 
-  const hasResult = result.meta.result_count !== 0 ? true : false;
+  const hasResult = spaces.meta.result_count !== 0 ? true : false;
 
   spinner.stop(true);
 
@@ -44,7 +44,7 @@ module.exports = async ({
     return console.log(emoji.get('scream'), ' ', bold('No results found!'))
   }
 
-  const spaceInfo = result.data.map(({
+  const spaceInfo = spaces.data.map(({
     participant_count,
     scheduled_start,
     title,
@@ -58,7 +58,7 @@ module.exports = async ({
     };
   })
 
-  const creatorInfo = result.includes.users.map(({
+  const creatorInfo = spaces.includes.users.map(({
     name,
     username,
     description,
@@ -72,12 +72,12 @@ module.exports = async ({
     };
   })
 
-  const spaces = merge(spaceInfo, creatorInfo)
+  const space = merge(spaceInfo, creatorInfo)
 
   function twitterHandleLink(handle) {
     return `https://twitter.com/${handle}`
   }
-  spaces.map(({ title, creator, creatorHandle, start, description }) => {
+  space.map(({ title, creator, creatorHandle, start, description }) => {
 
     console.log(red(bold('-----------------------------------------------------------------------------')));
     console.log();
