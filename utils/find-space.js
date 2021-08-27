@@ -4,9 +4,6 @@ const Spinner = require('cli-spinner').Spinner;
 const fetch = require('node-fetch')
 const merge = require('lodash.merge');
 const emoji = require('node-emoji')
-const CryptoJS = require("crypto-js");
-
-const SPACES_URL = 'https://api.twitter.com/2/spaces/search?query=';
 
 module.exports = async ({
   scheduled,
@@ -14,32 +11,14 @@ module.exports = async ({
   query
 }) => {
 
-  const bearer = await fetch('https://tweespaces-serverless-function.vercel.app/api/bearer');
-  const bearerResult = await bearer.json();
-
   const state = scheduled ? 'scheduled' : live ? 'live' : 'live'
-
-  const url = `${SPACES_URL}${query}&state=${state}&space.fields=participant_count,scheduled_start,title&expansions=creator_id&user.fields=name,description,username`;
-
-  const spinner = new Spinner('Searching for spaces....');
-
-  spinner.start(dim('Searching for spaces.....'));
-
-  const decryptWithAES = (stringToDecrypt) => {
-    const bytes = CryptoJS.AES.decrypt(stringToDecrypt, 'Magpienemo@011210');
-    const originalText = bytes.toString(CryptoJS.enc.Utf8);
-    return originalText;
-  };
-
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer ' + decryptWithAES(bearerResult.bearer),
-      'Content-Type': 'application/json'
-    },
-  });
-
+  const response = await fetch(`https://tweespaces-serverless-function.vercel.app/api/spaces?state=${state}`);
   const result = await response.json();
+
+  const spinner = new Spinner(dim('Searching for spaces.....'));
+
+  spinner.start();
+
   const hasResult = result.meta.result_count !== 0 ? true : false;
 
   spinner.stop(true);
