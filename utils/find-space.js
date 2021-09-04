@@ -4,6 +4,7 @@ const Spinner = require('cli-spinner').Spinner;
 const fetch = require('node-fetch')
 const merge = require('lodash.merge');
 const emoji = require('node-emoji')
+const axios = require('axios')
 
 module.exports = async ({
   scheduled,
@@ -12,24 +13,25 @@ module.exports = async ({
 }) => {
 
   const state = scheduled ? 'scheduled' : live ? 'live' : 'live'
-  const response = await fetch(`https://tweespaces-serverless-function.vercel.app/api/spaces`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: {
+  const response = await axios.post(`https://tweespaces-serverless-function.vercel.app/api/spaces`,
+    {
       state,
       query
-    }
-  });
-  const { spaces } = await response.json();
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+  const result = response.spaces.data;
+  console.log({ result })
 
 
   const spinner = new Spinner(dim('Searching for spaces.....'));
 
   spinner.start();
 
-  const hasResult = spaces.meta.result_count !== 0 ? true : false;
+  const hasResult = result === {} ? false : result.meta.result_count !== 0 ? true : false;
 
   spinner.stop(true);
 
@@ -44,7 +46,7 @@ module.exports = async ({
     return console.log(emoji.get('scream'), ' ', bold('No results found!'))
   }
 
-  const spaceInfo = spaces.data.map(({
+  const spaceInfo = result.map(({
     participant_count,
     scheduled_start,
     title,
@@ -58,7 +60,7 @@ module.exports = async ({
     };
   })
 
-  const creatorInfo = spaces.includes.users.map(({
+  const creatorInfo = result.includes.users.map(({
     name,
     username,
     description,
