@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { dim, italic, bold, red } = require('chalk');
+const { dim, italic, bold, red, green } = require('chalk');
 const Spinner = require('cli-spinner').Spinner;
 const merge = require('lodash.merge');
 const emoji = require('node-emoji')
@@ -85,7 +85,7 @@ module.exports = async ({
       if (start === undefined) {
         return console.log(emoji.get('timer_clock'), '  ', bold('Live now!'))
       }
-      return console.log(emoji.get('timer_clock'), '  ', bold(new Date(start).toLocaleTimeString('en-US')), dim(italic(' (All times PTZ)')))
+      return console.log(emoji.get('timer_clock'), '  ', bold(new Date(start).toLocaleTimeString('en-US')), dim(italic(' (All times localized)')), emoji.get('sunglasses'))
     }
 
     const dateCheck = () => {
@@ -96,19 +96,22 @@ module.exports = async ({
     }
 
     console.log(red(bold('-----------------------------------------------------------------------------')));
+    console.log(red(bold('Space details')));
     console.log();
     console.log(emoji.get('rocket'), ' ', bold(title));
     console.log();
     dateCheck()
     console.log();
     timingCheck()
+    console.log(green(bold('-----------------------------------------------------------------------------')));
+    console.log(green(bold('Host details')));
     console.log();
-    console.log(emoji.get('writing_hand'), '  ', bold(creator))
+    console.log(emoji.get('writing_hand'), '  ', bold('Name: ', creator))
     console.log();
-    console.log(emoji.get('question'), ' ', dim(description))
+    console.log(emoji.get('question'), ' ', bold('Bio: ', description))
     console.log()
-    console.log(emoji.get('baby_chick'), ' ', dim(bold(twitterHandleLink(creatorHandle))))
-    console.log();
+    console.log(emoji.get('baby_chick'), ' ', bold('Handle: ', twitterHandleLink(creatorHandle)))
+    console.log(green(bold('-----------------------------------------------------------------------------')));
   });
 
 }
