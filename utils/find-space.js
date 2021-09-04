@@ -81,13 +81,20 @@ module.exports = async ({
   }
   space.map(({ title, creator, creatorHandle, start, description }) => {
 
+    const timing = () => {
+      if (start === undefined) {
+        return console.log(emoji.get('timer_clock'), '  ', bold('Live now!'))
+      }
+      return console.log(emoji.get('timer_clock'), '  ', bold(new Date(start).toLocaleTimeString('en-US')), dim(italic(' (All times PTZ)')))
+    }
+
     console.log(red(bold('-----------------------------------------------------------------------------')));
     console.log();
     console.log(emoji.get('rocket'), ' ', bold(title));
     console.log();
     console.log(emoji.get('calendar'), ' ', bold(new Date(start).toLocaleDateString('en-US')))
     console.log();
-    console.log(emoji.get('timer_clock'), '  ', bold(new Date(start).toLocaleTimeString('en-US')), dim(italic(' (All times PTZ)')))
+    timing()
     console.log();
     console.log(emoji.get('writing_hand'), '  ', bold(creator))
     console.log();
