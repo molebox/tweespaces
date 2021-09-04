@@ -23,7 +23,11 @@ module.exports = async ({
         'Content-Type': 'application/json'
       },
     });
-  const result = response.spaces.data;
+  console.log('response.data: ', response.data)
+  const data = response.data.spaces.data;
+  const meta = response.data.spaces.meta;
+  const includes = response.data.spaces.includes;
+
   console.log({ result })
 
 
@@ -31,7 +35,7 @@ module.exports = async ({
 
   spinner.start();
 
-  const hasResult = result === {} ? false : result.meta.result_count !== 0 ? true : false;
+  const hasResult = result === {} ? false : meta.result_count !== 0 ? true : false;
 
   spinner.stop(true);
 
@@ -46,7 +50,7 @@ module.exports = async ({
     return console.log(emoji.get('scream'), ' ', bold('No results found!'))
   }
 
-  const spaceInfo = result.map(({
+  const spaceInfo = data.map(({
     participant_count,
     scheduled_start,
     title,
@@ -60,7 +64,7 @@ module.exports = async ({
     };
   })
 
-  const creatorInfo = result.includes.users.map(({
+  const creatorInfo = includes.users.map(({
     name,
     username,
     description,
