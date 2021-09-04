@@ -1,7 +1,7 @@
 
 # 🐤 tweespaces
 
-A node CLI for querying the Twitter spaces API. 
+A node CLI for querying the Twitter spaces API.
 
 
 ## Installation
@@ -9,9 +9,9 @@ A node CLI for querying the Twitter spaces API.
 No need to install anything, just use `npx` 🕺
 
 ```bash
- npx tws --live --query="developer"
+ npx tweespaces --live --query="developer"
 ```
-    
+
 ## API Reference
 
 There are 3 flags:
@@ -23,22 +23,21 @@ There are 3 flags:
 ### Show all live spaces with "developer" in the title
 
 ```bash
-  npx tws --live --query="developer"
+  npx tweespaces --live --query="developer"
 ```
 
 ### Show all scheduled spaces with "developer" in the title
 
 ```bash
-  npx tws --scheduled --query="developer"
+  npx tweespaces --scheduled --query="developer"
 ```
 
 ## Result
 
 !['A GIF of running a tweespace command. Shows the CLI output'](tweespaces.gif)
-  
+
 ## Author
 
 - GitHub: [@molebox](https://www.github.com/molebox)
 - Twitter: [@studio_hungry](https://twitter.com/studio_hungry)
 
-  
