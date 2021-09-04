@@ -1,7 +1,6 @@
 require('dotenv').config();
 const { dim, italic, bold, red } = require('chalk');
 const Spinner = require('cli-spinner').Spinner;
-const fetch = require('node-fetch')
 const merge = require('lodash.merge');
 const emoji = require('node-emoji')
 const axios = require('axios')
@@ -23,19 +22,16 @@ module.exports = async ({
         'Content-Type': 'application/json'
       },
     });
-  console.log('response.data: ', response.data)
+
   const data = response.data.spaces.data;
   const meta = response.data.spaces.meta;
   const includes = response.data.spaces.includes;
-
-  console.log({ result })
-
 
   const spinner = new Spinner(dim('Searching for spaces.....'));
 
   spinner.start();
 
-  const hasResult = result === {} ? false : meta.result_count !== 0 ? true : false;
+  const hasResult = meta.result_count !== 0 ? true : false;
 
   spinner.stop(true);
 
