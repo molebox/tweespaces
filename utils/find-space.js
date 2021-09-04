@@ -85,20 +85,20 @@ module.exports = async ({
       if (start === undefined) {
         return console.log(emoji.get('timer_clock'), '  ', bold('Live now!'))
       }
-      return console.log(emoji.get('timer_clock'), '  ', bold(new Date(start).toLocaleTimeString('en-US')), dim(italic(' (All times localized)')), emoji.get('sunglasses'))
+      return console.log(emoji.get('timer_clock'), '  ', bold('Time: ', new Date(start).toLocaleTimeString('en-US')), dim(italic(' (All times localized)')), emoji.get('sunglasses'))
     }
 
     const dateCheck = () => {
       if (start === undefined) {
         return null
       }
-      return console.log(emoji.get('calendar'), ' ', bold(new Date(start).toLocaleDateString('en-US')))
+      return console.log(emoji.get('calendar'), ' ', bold('Date: ', new Date(start).toLocaleDateString('en-US')))
     }
 
     console.log(red(bold('-----------------------------------------------------------------------------')));
     console.log(red(bold('Space details')));
     console.log();
-    console.log(emoji.get('rocket'), ' ', bold(title));
+    console.log(emoji.get('rocket'), ' ', bold('Title: ', title));
     console.log();
     dateCheck()
     console.log();
