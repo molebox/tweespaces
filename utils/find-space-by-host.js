@@ -5,7 +5,6 @@ const emoji = require('node-emoji');
 const axios = require('axios');
 
 module.exports = async ({ username }) => {
-
     const userResponse = await axios.post(
         `https://tweespaces-serverless-function.vercel.app/api/space-by-user`,
         {
@@ -21,6 +20,7 @@ module.exports = async ({ username }) => {
     // console.log(userResponse.data)
 
     const data = userResponse.data.spaces.data;
+    console.log({ data })
     const meta = userResponse.data.spaces.meta;
     const includes = userResponse.data.spaces.includes;
 
