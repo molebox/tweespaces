@@ -11,6 +11,7 @@ const init = require('./utils/init');
 const cli = require('./utils/cli');
 const log = require('./utils/log');
 const findSpace = require('./utils/find-space');
+const findSpaceByHost = require('./utils/find-space-by-host');
 
 const input = cli.input;
 const flags = cli.flags;
@@ -20,10 +21,14 @@ const { clear, debug } = flags;
 	init({ clear });
 	input.includes(`help`) && cli.showHelp(0);
 
+	if (flags.username) {
+		await findSpaceByHost({ username: flags.username })
+	}
+
 	if (flags.live) {
-		await findSpace({scheduled: false, live: true, query: flags.query});
+		await findSpace({ scheduled: false, live: true, query: flags.query });
 	} else if (flags.scheduled) {
-		await findSpace({scheduled: true, live: false, query: flags.query});
+		await findSpace({ scheduled: true, live: false, query: flags.query });
 	}
 
 	debug && log(flags);

@@ -37,11 +37,15 @@ const flags = {
 	query: {
 		type: `string`,
 		desc: `Search query`
+	},
+	host: {
+		type: `string`,
+		desc: `The host of the space`
 	}
 };
 
 const commands = {
-	help: { desc: `Print help info` },
+	help: { desc: `Print help info` }
 };
 
 const helpText = meowHelp({
