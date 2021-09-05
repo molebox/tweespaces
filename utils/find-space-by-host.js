@@ -18,7 +18,7 @@ module.exports = async ({ username }) => {
         }
     );
 
-    console.group({ userResponse })
+    // console.log(userResponse.data)
 
     const data = userResponse.data.spaces.data;
     const meta = userResponse.data.spaces.meta;
