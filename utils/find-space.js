@@ -3,8 +3,14 @@ const Spinner = require('cli-spinner').Spinner;
 const merge = require('lodash.merge');
 const emoji = require('node-emoji');
 const axios = require('axios');
+const utils = require('./util-functions')
 
 module.exports = async ({ scheduled, live, query, username }) => {
+  const spinner = new Spinner(red('Searching for spaces.....'));
+
+  spinner.start();
+  spinner.setSpinnerString('|/-\\');
+
   const state = scheduled ? 'scheduled' : live ? 'live' : 'live';
 
   const spaceResponse = await axios.post(
@@ -24,10 +30,6 @@ module.exports = async ({ scheduled, live, query, username }) => {
   const data = spaceResponse.data.spaces.data;
   const meta = spaceResponse.data.spaces.meta;
   const includes = spaceResponse.data.spaces.includes;
-
-  const spinner = new Spinner(dim('Searching for spaces.....'));
-
-  spinner.start();
 
   const hasResult = meta.result_count !== 0 ? true : false;
 
@@ -60,33 +62,8 @@ module.exports = async ({ scheduled, live, query, username }) => {
     return console.log(emoji.get('scream'), ' ', bold('No results found!'));
   }
 
-  const spaceInfo = data.map(
-    ({ participant_count, scheduled_start, title, creator_id }) => {
-      return {
-        creator_id,
-        participants: participant_count,
-        start: scheduled_start,
-        title
-      };
-    }
-  );
+  const space = merge(utils.spaceInfo(data), utils.creatorInfo(includes.users));
 
-  const creatorInfo = includes.users.map(
-    ({ name, username, description, id }) => {
-      return {
-        id,
-        creatorHandle: username,
-        creator: name,
-        description
-      };
-    }
-  );
-
-  const space = merge(spaceInfo, creatorInfo);
-
-  function twitterHandleLink(handle) {
-    return `https://twitter.com/${handle}`;
-  }
   space.map(({ title, creator, creatorHandle, start, description }) => {
     const timingCheck = () => {
       if (start === undefined) {
@@ -116,6 +93,8 @@ module.exports = async ({ scheduled, live, query, username }) => {
       );
     };
 
+    console.log();
+    console.log();
     console.log(
       red(
         bold(
@@ -146,7 +125,7 @@ module.exports = async ({ scheduled, live, query, username }) => {
     console.log(
       emoji.get('baby_chick'),
       ' ',
-      bold('Handle: ', twitterHandleLink(creatorHandle))
+      bold('Handle: ', utils.twitterHandleLink(creatorHandle))
     );
     console.log(
       green(
@@ -155,5 +134,7 @@ module.exports = async ({ scheduled, live, query, username }) => {
         )
       )
     );
+    console.log();
+    console.log();
   });
 };

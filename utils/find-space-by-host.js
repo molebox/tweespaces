@@ -1,10 +1,16 @@
 const { dim, italic, bold, red, green } = require('chalk');
-const Spinner = require('cli-spinner').Spinner;
+var Spinner = require('cli-spinner').Spinner;
 const merge = require('lodash.merge');
 const emoji = require('node-emoji');
 const axios = require('axios');
+const utils = require('./util-functions')
 
 module.exports = async ({ username }) => {
+    const spinner = new Spinner(red('Searching for hosts spaces.....'));
+
+    spinner.start();
+    spinner.setSpinnerString('|/-\\');
+
     const userResponse = await axios.post(
         `https://tweespaces-serverless-function.vercel.app/api/space-by-user`,
         {
@@ -21,10 +27,6 @@ module.exports = async ({ username }) => {
     const meta = userResponse.data.spaces.meta;
     const includes = userResponse.data.spaces.includes;
 
-    const spinner = new Spinner(dim('Searching for spaces.....'));
-
-    spinner.start();
-
     const hasResult = meta.result_count !== 0 ? true : false;
 
     spinner.stop(true);
@@ -33,32 +35,7 @@ module.exports = async ({ username }) => {
         return console.log(emoji.get('scream'), ' ', bold(`This person hasn't scheduled any Twitter spaces yet.`));
     }
 
-    const spaceInfo = data.map(
-        ({ scheduled_start, title, creator_id }) => {
-            return {
-                creator_id,
-                start: scheduled_start,
-                title
-            };
-        }
-    );
-
-    const creatorInfo = includes.users.map(
-        ({ name, username, description, id }) => {
-            return {
-                id,
-                creatorHandle: username,
-                creator: name,
-                description
-            };
-        }
-    );
-
-    const space = merge(spaceInfo, creatorInfo);
-
-    function twitterHandleLink(handle) {
-        return `https://twitter.com/${handle}`;
-    }
+    const space = merge(utils.userSpaceInfo(data), utils.creatorInfo(includes.users));
 
     space.map(({ title, creator, creatorHandle, start, description }) => {
         const scheduledFor = () => {
@@ -82,6 +59,8 @@ module.exports = async ({ username }) => {
             );
         };
 
+        console.log();
+        console.log();
         console.log(
             red(
                 bold(
@@ -112,7 +91,7 @@ module.exports = async ({ username }) => {
         console.log(
             emoji.get('baby_chick'),
             ' ',
-            bold('Handle: ', twitterHandleLink(creatorHandle))
+            bold('Handle: ', utils.twitterHandleLink(creatorHandle))
         );
         console.log(
             green(
@@ -121,5 +100,7 @@ module.exports = async ({ username }) => {
                 )
             )
         );
+        console.log();
+        console.log();
     });
 }
