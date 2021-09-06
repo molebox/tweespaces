@@ -104,7 +104,7 @@ module.exports = async ({ scheduled, live, query, username }) => {
     );
     console.log(red(bold('Space details')));
     console.log();
-    console.log(emoji.get('rocket'), ' ', bold('Title: ', title));
+    console.log(emoji.get('rocket'), '', bold('Title: ', title));
     console.log();
     dateCheck();
     console.log();
