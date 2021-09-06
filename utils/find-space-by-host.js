@@ -17,10 +17,7 @@ module.exports = async ({ username }) => {
         }
     );
 
-    // console.log(userResponse.data)
-
     const data = userResponse.data.spaces.data;
-    console.log({ data })
     const meta = userResponse.data.spaces.meta;
     const includes = userResponse.data.spaces.includes;
 
@@ -33,14 +30,13 @@ module.exports = async ({ username }) => {
     spinner.stop(true);
 
     if (!hasResult) {
-        return console.log(emoji.get('scream'), ' ', bold('No results found!'));
+        return console.log(emoji.get('scream'), ' ', bold(`This person hasn't scheduled any Twitter spaces yet.`));
     }
 
     const spaceInfo = data.map(
-        ({ participant_count, scheduled_start, title, creator_id }) => {
+        ({ scheduled_start, title, creator_id }) => {
             return {
                 creator_id,
-                participants: participant_count,
                 start: scheduled_start,
                 title
             };
@@ -63,19 +59,13 @@ module.exports = async ({ username }) => {
     function twitterHandleLink(handle) {
         return `https://twitter.com/${handle}`;
     }
+
     space.map(({ title, creator, creatorHandle, start, description }) => {
-        const timingCheck = () => {
-            if (start === undefined) {
-                return console.log(
-                    emoji.get('timer_clock'),
-                    '  ',
-                    bold('Live now!')
-                );
-            }
+        const scheduledFor = () => {
             return console.log(
                 emoji.get('timer_clock'),
                 '  ',
-                bold('Time: ', new Date(start).toLocaleTimeString('en-US')),
+                bold('Sheduled for: ', new Date(start).toLocaleTimeString('en-US')),
                 dim(italic(' (All times localized)')),
                 emoji.get('sunglasses')
             );
@@ -105,7 +95,7 @@ module.exports = async ({ username }) => {
         console.log();
         dateCheck();
         console.log();
-        timingCheck();
+        scheduledFor();
         console.log(
             green(
                 bold(

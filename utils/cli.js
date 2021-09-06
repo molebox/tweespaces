@@ -26,20 +26,24 @@ const flags = {
 	},
 	live: {
 		type: `boolean`,
+		alias: `l`,
 		default: false,
 		desc: `Spaces live now`
 	},
 	scheduled: {
 		type: `boolean`,
+		alias: `s`,
 		default: false,
 		desc: `Spaces scheduled for later`
 	},
 	query: {
 		type: `string`,
+		alias: `q`,
 		desc: `Search query`
 	},
 	host: {
 		type: `string`,
+		alias: `h`,
 		desc: `The host of the space`
 	}
 };

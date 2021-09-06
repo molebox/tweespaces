@@ -21,8 +21,8 @@ const { clear, debug } = flags;
 	init({ clear });
 	input.includes(`help`) && cli.showHelp(0);
 
-	if (flags.username) {
-		await findSpaceByHost({ username: flags.username })
+	if (flags.host) {
+		await findSpaceByHost({ username: flags.host })
 	}
 
 	if (flags.live) {
