@@ -16,10 +16,10 @@ No need to install anything, just use `npx` 🕺
 
 There are 4 flags:
 
-- `--live` - `--l` - all spaces that are live now and match the query.
-- `--scheduled` - `--s` - all spaces that are scheduled to be run and match the query.
-- `--query=""` - `--q=""` - the keyword to query. This can be any text (including mentions and Hashtags).
-- `--host=""` - `--h=""` - all spaces that have been shceduled by the given host. This is someones twitter handle. For example `--host="studio_hungry"`
+- `--live` - (alias: `--l`) - All spaces that are live now and match the query.
+- `--scheduled` - (alias: `--s`) - All spaces that are scheduled to be run and match the query.
+- `--query=""` - (alias: `--q=""`) - The keyword to query. This can be any text (including mentions and Hashtags).
+- `--host=""` - (alias: `--h=""`) - All spaces that have been scheduled by the given host. This is someones twitter handle. For example `--host="studio_hungry"`
 
 
 ### Show all live spaces with "developer" in the title
